@@ -1,3 +1,5 @@
+package ru.netology.domain;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -28,6 +30,29 @@ public class ShopRepositoryTest {
 
         Assertions.assertThrows(NotFoundException.class, () -> {
             repo.removeById(-100);
+        });
+    }
+
+    @Test
+    public void successExists() {
+        Product product4 = new Product(4, "Галстук", 500);
+        repo.add(product1);
+        repo.add(product2);
+        repo.add(product3);
+        repo.add(product4);
+
+        Product[] expected = {product1, product2, product3, product4};
+        Assertions.assertArrayEquals(expected, repo.findAll());
+    }
+
+    @Test
+    public void alreadyExistsExceptionTest() {
+        repo.add(product1);
+        repo.add(product2);
+        repo.add(product3);
+
+        Assertions.assertThrows(AlreadyExistsException.class, () -> {
+            repo.alreadyNoProduct(product1);
         });
     }
 }

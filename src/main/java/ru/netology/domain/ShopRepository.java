@@ -1,3 +1,5 @@
+package ru.netology.domain;
+
 public class ShopRepository {
     private Product[] products = new Product[0];
 
@@ -52,7 +54,7 @@ public class ShopRepository {
     }
 
     public void removeById(int id) {
-        if(findById(id) == null) {
+        if (findById(id) == null) {
             throw new NotFoundException(
                     "Element with id: " + id + " not found"
             );
@@ -66,5 +68,13 @@ public class ShopRepository {
             }
         }
         products = tmp;
+    }
+
+    public void alreadyNoProduct (Product product) {
+        if (findById(product.getId()) != null) {
+            throw new AlreadyExistsException(
+                    "Element with id: " + product.getId() + " already exist"
+            );
+        }
     }
 }
